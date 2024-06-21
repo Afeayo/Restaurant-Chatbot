@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Chatbot</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <h1>Afe Chops</h1>
+      </div>
+      <nav>
+        <div class="menu-toggle" id="mobile-menu">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <ul id="nav-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="#chatbot">Order</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+      <div class="contact-info">
+        <a href="#" class="special-offer">Special Offer</a>
+        <a href="tel:+2347067412527" class="phone-number">+2347067412527</a>
+      </div>
+    </header>
+    <section class="hero">
+      <h2>Welcome To <span>Afe Chops</span></h2>
+      <p>Pizza, Salad, Burger, pasta</p>
+      <a href="#" class="find-more">Find for more</a>
+    </section>
+    <section class="salads">
+      <h3>Our Delicious and Special Chops</h3>
+      <p>Explore our delightful and nutritious chops options, crafted with the freshest ingredients.</p>
+      <div class="salad-items">
+        <div class="salad-item">
+          <img src="/images/salad-png-42826.png" alt="Special Salad">
+          <h4>Special Pizza</h4>
+          <p>A delicious blend of fresh greens, tomatoes, cucumbers, and a hint of lime.</p>
+        </div>
+        <div class="salad-item">
+          <img src="/images/pizza-png-19321.png" alt="Russian Salad">
+          <h4>Russian Salad</h4>
+          <p>A hearty mix of potatoes, peas, carrots, and mayonnaise for a rich taste.</p>
+        </div>
+        <div class="salad-item">
+          <img src="/images/food-png-2953.png" alt="Asian Salad">
+          <h4>Nija Burger</h4>
+          <p>A savory combination of noodles, cabbage, carrots, and sesame dressing.</p>
+        </div>
+        <div class="salad-item">
+          <img src="/images/Coca-Cola-9.png" alt="American Salad">
+          <h4>Chilled Drinks</h4>
+          <p>Classic chops with lettuce, bacon, cheese, and a creamy ranch dressing with chilled coke.</p>
+        </div>
+      </div>
+    </section>
+    <section class="chatbot">
+      <button id="chatbotButton" class="chatbot-button">💬</button>
+      <div id="chatBox" class="chat-box hidden">
+        <h3>Chat with us To Place your Order</h3>
+        <input id="usernameInput" type="text" placeholder="Enter your name..." class="message-input">
+        <button id="startChatButton" class="send-button">Start Chat</button>
+        <div id="chatMessages" class="chat-messages"></div>
+        <input id="messageInput" type="text" placeholder="Type your message..." class="message-input" style="display:none;">
+        <button id="sendButton" class="send-button" style="display:none;">Send</button>
+      </div>
+    </section>
+  </div>
+  <script src="/js/main.js"></script>
+</body>
+</html>
