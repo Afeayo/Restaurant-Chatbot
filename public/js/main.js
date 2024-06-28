@@ -1,78 +1,88 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const chatbotButton = document.getElementById('chatbotButton');
+document.addEventListener('DOMContentLoaded', function () {
+  const chatButton = document.getElementById('chatButton');
   const chatBox = document.getElementById('chatBox');
+  const usernameForm = document.getElementById('usernameForm');
+  const chatContainer = document.getElementById('chatContainer');
+  const usernameInput = document.getElementById('usernameInput');
+  const signInButton = document.getElementById('signInButton');
   const messageInput = document.getElementById('messageInput');
   const sendButton = document.getElementById('sendButton');
-  const chatMessages = document.getElementById('chatMessages');
-  const usernameInput = document.getElementById('usernameInput');
-  const startChatButton = document.getElementById('startChatButton');
-  const sessionId = '<%= sessionId %>'; 
+  const messages = document.getElementById('messages');
+  let socket;
 
-  
-  chatbotButton.addEventListener('click', () => {
-  chatBox.classList.toggle('visible');
+  chatButton.addEventListener('click', () => {
+    chatBox.style.display = chatBox.style.display === 'none' ? 'block' : 'none';
   });
 
-  
-  startChatButton.addEventListener('click', () => {
+  signInButton.addEventListener('click', () => {
     const username = usernameInput.value.trim();
     if (username) {
-      const p = document.createElement('p');
-      p.textContent = `You are welcome  ${username} kindly select an option`;
-      chatMessages.appendChild(p);
-      usernameInput.style.display = 'none';
-      startChatButton.style.display = 'none';
-      messageInput.style.display = 'block';
-      sendButton.style.display = 'block';
+      fetch('/set-username', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+      }).then(response => {
+        if (response.ok) {
+          usernameForm.style.display = 'none';
+          chatContainer.style.display = 'block';
+          initializeWebSocket(username);
+        } else {
+          alert('Error signing in. Please try again.');
+        }
+      });
     }
   });
 
-  
-  const ws = new WebSocket(`ws://localhost:7000/?sessionId=${sessionId}`);
+  function initializeWebSocket(username) {
+    socket = new WebSocket(`ws://${window.location.host}?sessionId=${username}`);
+    
+    socket.addEventListener('open', function () {
+      console.log('Connected to the WebSocket server');
+    });
 
-  ws.onopen = () => {
-    console.log('Connected to the WebSocket server');
-  };
+    socket.addEventListener('message', function (event) {
+      const message = JSON.parse(event.data);
+      displayMessage(message, 'received');
+    });
 
-  ws.onmessage = (event) => {
-    const p = document.createElement('p');
-    p.textContent = `Bot: ${event.data}`;
-    chatMessages.appendChild(p);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  };
+    socket.addEventListener('close', function () {
+      console.log('Disconnected from the WebSocket server');
+    });
 
-  ws.onclose = () => {
-    console.log('Disconnected from the WebSocket server');
-  };
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', function (event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  }
 
-  ws.onerror = (error) => {
-    console.error('WebSocket error:', error);
-  };
-
-  
-  sendButton.addEventListener('click', () => {
+  function sendMessage() {
     const message = messageInput.value.trim();
-    if (message) {
-      const p = document.createElement('p');
-      p.textContent = `You: ${message}`;
-      chatMessages.appendChild(p);
-      ws.send(message);
+    if (message && socket && socket.readyState === WebSocket.OPEN) {
+      const messageObject = {
+        content: message,
+        sender: 'User'
+      };
+      socket.send(JSON.stringify(messageObject));
+      displayMessage(messageObject, 'sent');
       messageInput.value = '';
-      chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-  });
+  }
 
-  
-  messageInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      sendButton.click();
-    }
-  });
+  function displayMessage(message, type) {
+    const messageElement = document.createElement('div');
+    messageElement.className = `message ${type}`;
+    
+    const contentElement = document.createElement('div');
+    contentElement.className = 'content';
+    contentElement.textContent = message.content;
 
-  
-  const mobileMenu = document.getElementById('mobile-menu');
-  const navList = document.getElementById('nav-list');
-  mobileMenu.addEventListener('click', () => {
-    navList.classList.toggle('show');
-  });
+    messageElement.appendChild(contentElement);
+
+    messages.appendChild(messageElement);
+    messages.scrollTop = messages.scrollHeight;
+  }
 });

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Restaurant Chatbot</title>
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <div class="container">
@@ -26,17 +27,17 @@
       </nav>
       <div class="contact-info">
         <a href="#" class="special-offer">Special Offer</a>
-        <a href="tel:+2347067412527" class="phone-number">+2347067412527</a>
+        <a href="tel:+2347067412527" class="phone-number">+923351623561</a>
       </div>
     </header>
     <section class="hero">
-      <h2>Welcome To <span>Afe Chops</span></h2>
-      <p>Pizza, Salad, Burger, pasta</p>
+      <h2>All Delicious <span>Nija Chops</span></h2>
+      <p>Pizza, Salad, Burger, Pasta</p>
       <a href="#" class="find-more">Find for more</a>
     </section>
     <section class="salads">
-      <h3>Our Delicious and Special Chops</h3>
-      <p>Explore our delightful and nutritious chops options, crafted with the freshest ingredients.</p>
+      <h3>Our Delicious and Special Salad</h3>
+      <p>Explore our delightful and nutritious salad options, crafted with the freshest ingredients.</p>
       <div class="salad-items">
         <div class="salad-item">
           <img src="/images/salad-png-42826.png" alt="Special Salad">
@@ -60,15 +61,21 @@
         </div>
       </div>
     </section>
-    <section class="chatbot">
-      <button id="chatbotButton" class="chatbot-button">💬</button>
-      <div id="chatBox" class="chat-box hidden">
-        <h3>Chat with us To Place your Order</h3>
-        <input id="usernameInput" type="text" placeholder="Enter your name..." class="message-input">
-        <button id="startChatButton" class="send-button">Start Chat</button>
-        <div id="chatMessages" class="chat-messages"></div>
-        <input id="messageInput" type="text" placeholder="Type your message..." class="message-input" style="display:none;">
-        <button id="sendButton" class="send-button" style="display:none;">Send</button>
+    <section class="chatbot" id="chatbot">
+      <h2>Chat with us</h2>
+      <div id="chatButton" class="chat-button">
+        <i class="fas fa-comments"></i>
+      </div>
+      <div id="chatBox" class="chat-box" style="display: none;">
+        <div id="usernameForm">
+          <input id="usernameInput" type="text" placeholder="Enter your username..." class="message-input">
+          <button id="signInButton" class="send-button">Sign in</button>
+        </div>
+        <div id="chatContainer" style="display: none;">
+          <div id="messages" class="messages"></div>
+          <input id="messageInput" type="text" placeholder="Type your message..." class="message-input">
+          <button id="sendButton" class="send-button"><i class="fas fa-paper-plane"></i></button>
+        </div>
       </div>
     </section>
   </div>
